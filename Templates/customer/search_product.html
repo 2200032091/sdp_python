@@ -1,0 +1,53 @@
+{% extends 'customer/customernavbar.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search Results</title>
+    <!-- Link Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Optional: Add custom CSS here */
+    </style>
+</head>
+<body>
+{% block body %}
+<center>
+    <br>
+    <form action="{% url 'search_product' %}" method="GET">
+        <input type="text" name="q" placeholder="Search products">
+        <button type="submit">Search</button>
+    </form>
+</center>
+<br>
+
+<div class="container">
+    <div class="row">
+        {% if results %}
+            {% for product in results %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ product.image_url }}" class="card-img-top" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <h6 class="card-text">Price: <span style="color: #8B0000; font-weight: bold;">Rs.{{ product.price }}</span></h6>
+                            <h6 class="card-text">Rating: {{ product.review }}</h6>
+                            <h6 class="card-text">From: <span style="color: #8B0000; font-weight: bold;">{{ product.website }}</span></h6>
+                            <a href="{{ product.buy }}" class="btn btn-primary" target="_blank">Shop</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Link Bootstrap JS and any other scripts if needed -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}
+</body>
+</html>
